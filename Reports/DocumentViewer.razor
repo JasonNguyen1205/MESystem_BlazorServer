@@ -1,0 +1,51 @@
+﻿@page "/report/reportviewer"
+@page "/report/reportviewer/{ShipmentID}"
+
+@using DevExpress.Blazor.Reporting
+@using DevExpress.XtraReports.UI
+
+@inject TraceService TraceDbService
+@inject IHostEnvironment host
+
+<h3>FRIWO Report System</h3>
+@*<link href="_content/DevExpress.Blazor.Themes/blazing-berry.bs5.min.css" rel="stylesheet" />*@
+<link rel="stylesheet" href="_content/DevExpress.Blazor.Reporting.Viewer/css/dx-blazor-reporting-components.bs5.css">
+
+<DxReportViewer @ref="reportViewer" Report="@Report">
+</DxReportViewer>
+
+@code {
+    DxReportViewer? reportViewer{ get; set; }
+
+    [Parameter]
+    public string ShipmentID { get; set; }
+
+    [Parameter]
+    public string ETA { get; set; }
+
+    [Parameter]
+    public string ETD { get; set; }
+
+    [Parameter]
+    public string ContainerId { get; set; }
+
+    public IEnumerable<Shipment> Shipments { get; set; }
+
+    XtraReport? Report { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var t = await TraceDbService.GetLogisticData("ALL");
+        //Shipments = t.Where(_ => _.ShipmentId == ShipmentID && _.RealPalletQty>0);
+        Shipments = await TraceDbService.GetLogisticData(ShipmentID) ?? new List<Shipment>();
+        foreach (var item in Shipments)
+        {
+            
+        }
+        Report = new Reports.PackingList();
+        Report.DataSource = Shipments;
+        //await Report.ExportToPdfAsync("/PackingList.pdf");
+        //await Report.PrintAsync();
+    }
+  
+}

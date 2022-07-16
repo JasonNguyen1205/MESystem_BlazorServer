@@ -1,0 +1,26 @@
+﻿.switch-toggle {
+    float: left;
+    background-color: dimgray;
+    animation-delay: revert;
+}
+
+    .switch-toggle input {
+        position: absolute;
+        opacity: 0;
+    }
+
+        .switch-toggle input + label {
+            padding: 7px;
+            float: left;
+            color: whitesmoke;
+            cursor: pointer;
+        }
+
+        .switch-toggle input:checked + label {
+            background: green;
+        }
+
+.label-radio-custom {
+    min-width: stretch;
+    text-align: center;
+}

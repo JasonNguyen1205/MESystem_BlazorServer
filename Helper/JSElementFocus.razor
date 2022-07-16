@@ -1,0 +1,50 @@
+﻿@inject IJSRuntime JSRuntime
+<input id="fake" style="width:0px; border:none"/>
+
+@code {
+    [Parameter]
+    public string? FocusElement { get => fe; set{ fe = value;Task.Run(async () => await Focus()); } }
+    [Parameter]
+    public string? ReadOnlyElement { get => ra; set { ra = value;} }
+    string? ra = "";
+    string? fe = "";
+    public string? InputId { get; set; } = "fake";
+
+    //public ElementReference element { get; set; }
+
+    public bool ShouldUpdateUI { get; set; }
+
+    public async Task Focus()
+    {
+
+        if (string.IsNullOrEmpty(FocusElement)) return;
+        await UpdateUI();
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("setReadOnlyByID", ReadOnlyElement,true);
+            await JSRuntime.InvokeVoidAsync("focusEditorByID", FocusElement);
+        }
+        catch (Exception)
+        {
+            await JSRuntime.InvokeVoidAsync("focusEditorByID", "fake");
+        }
+
+        await UpdateUI();
+    }
+
+    private async Task UpdateUI()
+    {
+        ShouldUpdateUI = true;
+        //Update UI
+        if (ShouldRender())
+        {
+            await Task.Delay(5);
+            await InvokeAsync(StateHasChanged);
+            await Task.Delay(5);
+            //ShouldUpdateUI = false;
+        }
+
+        Console.WriteLine("UI is updated");
+
+    }
+}

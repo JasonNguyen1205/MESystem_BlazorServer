@@ -1,0 +1,31 @@
+﻿@page "/shipoutpallet"
+
+@inherits ComponentBase
+@using MESystem.LabelComponents
+
+<DxPopup @bind-Visible="@VerifyTextBoxEnabled">
+    <div class="col-12 d-block">
+        <div class="col-12 m-0 d-flex">
+
+            <input id="BoxScanField" @bind-value=@(BarcodeBox) class="w-100"
+                      
+                       @onkeyup="@VerifyBoxHandleInput" />
+            <i class="fa-solid fa-barcode" style="aspect-ratio:auto; margin:auto; margin-left: -24px; z-index: 1; cursor:zoom-out; color: steelblue" onclick="@(async() =>{ ShowScanBarcode = true; await UpdateUI();})" />
+        </div>
+        <div class="col-12 m-0 d-flex">
+
+            <input id="PalletScanField" @bind-value=@BarcodePallete
+            readonly=@(!VerifyTextBoxEnabled) class="w-100"
+                       @onkeyup="@VerifyHandleInput" />
+            <i class="fa-solid fa-barcode" style="aspect-ratio:auto; margin:auto; margin-left: -24px; z-index: 1; cursor:zoom-out; color: steelblue" onclick="@(async() =>{ ShowScanBarcode = true; await UpdateUI();})" />
+        </div>
+
+
+
+
+        <div class="col-12">
+            <h5 style="color: @InfoColor;">@CurrentFgs / @StandardFgs</h5>
+        </div>
+
+    </div>
+</DxPopup>
