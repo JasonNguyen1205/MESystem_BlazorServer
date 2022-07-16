@@ -33,13 +33,13 @@ var builder = WebApplication.CreateBuilder(args);
 //    // By default, all incoming requests will be authorized according to the default policy.
 //    options.FallbackPolicy = options.DefaultPolicy;
 //});
-
+builder.Services.AddDevExpressBlazor();
 builder.Services.AddBlazoredToast();
 builder.Services.AddRazorPages();
-//uilder.Services.AddLocalization();
+builder.Services.AddLocalization();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient();
-//builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services
     .AddCors(
@@ -53,7 +53,7 @@ builder.Services
         });
 
 builder.Services.AddDevExpressBlazor(configure => configure.BootstrapVersion=DevExpress.Blazor.BootstrapVersion.v5);
-//builder.Services.AddDevExpressBlazorReporting();
+builder.Services.AddDevExpressBlazorReporting();
 builder.Services.AddDevExpressServerSideBlazorReportViewer();
 builder.Services.AddControllers();
 
@@ -157,16 +157,17 @@ else
 {
     app.UseDeveloperExceptionPage();
 }
-
+app.Environment.ContentRootFileProvider.GetDirectoryContents("wwwwroot");
+app.UseStaticFiles();
 //app.UseRequestLocalization(new RequestLocalizationOptions()
 //    .AddSupportedCultures(new[] { "de-DE", "vi-VN" })
 //    .AddSupportedUICultures(new[] { "de-DE", "vi-VN" }));
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseCors();
 app.UseStaticFiles();
 app.UseRouting();
-//app.UseDevExpressBlazorReporting();
+app.UseDevExpressBlazorReporting();
 app.UseDevExpressServerSideBlazorReportViewer();
 //app.UseAuthentication();
 //app.UseAuthorization();
