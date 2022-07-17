@@ -17,6 +17,7 @@ using MESystem.Data.TRACE;
 using MESystem.Helper;
 using MESystem.LabelComponents;
 using MESystem.Pages.Warehouse;
+using MESystem.SEO;
 using MESystem.Service;
 
 using Microsoft.AspNetCore.WebSockets;
@@ -40,6 +41,8 @@ builder.Services.AddLocalization();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddSignalR();
+builder.Services.AddMvc();
 
 builder.Services
     .AddCors(
@@ -133,6 +136,7 @@ builder.Services.AddScoped<PalleteLabel>();
 builder.Services.AddScoped<ShipOutPallet>();
 builder.Services.AddScoped<SwitchToggle>();
 builder.Services.AddScoped<BarcodeReader>();
+builder.Services.AddScoped<MetadataTransferService>();
 
 
 //builder.Services.AddBlazmBluetooth();
@@ -157,23 +161,28 @@ else
 {
     app.UseDeveloperExceptionPage();
 }
-app.Environment.ContentRootFileProvider.GetDirectoryContents("wwwwroot");
+//app.Environment.ContentRootFileProvider.GetDirectoryContents("wwwwroot");
 app.UseStaticFiles();
 //app.UseRequestLocalization(new RequestLocalizationOptions()
 //    .AddSupportedCultures(new[] { "de-DE", "vi-VN" })
 //    .AddSupportedUICultures(new[] { "de-DE", "vi-VN" }));
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseCors();
-app.UseStaticFiles();
+//app.UseStaticFiles();
 app.UseRouting();
 app.UseDevExpressBlazorReporting();
 app.UseDevExpressServerSideBlazorReportViewer();
 //app.UseAuthentication();
 //app.UseAuthorization();
 
-app.MapBlazorHub();
-app.MapFallbackToPage("/_Host");
-app.MapControllers();
+    app.MapRazorPages();
+    app.MapBlazorHub();
+    app.MapControllers();
+
+app.MapFallbackToFile("/Index.razor");
+//conf.MapFallbackToFile("index.razor");
+
+Console.WriteLine("Application Start");
 
 app.Run();

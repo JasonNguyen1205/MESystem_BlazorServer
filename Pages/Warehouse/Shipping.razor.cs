@@ -1,4 +1,5 @@
-﻿using System.Drawing.Printing;
+﻿using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.IO;
 using System.Text;
 
@@ -226,11 +227,11 @@ public partial class Shipping : ComponentBase
 
     public bool Sound { get; set; }
 
-    public List<string>? ShipmentIdList { get; set; }
+    public IEnumerable<string> ShipmentIdList { get; set; }
 
     public IEnumerable<Shipment> Shipments { get; set; }
 
-    public string? SelectedShipment { get => selectedShipment; set { selectedShipment = value; _ = Task.Run(async () => await UpdateUI()); } }
+    public string SelectedShipment { get => selectedShipment; set { selectedShipment = value; _ = Task.Run(async () => await UpdateUI()); } }
 
     public bool AllOpenedPOMode { get; set; }
 
@@ -339,15 +340,16 @@ public partial class Shipping : ComponentBase
             CustomerOrders = await TraceDataService.GetCustomerRevision(2, "", "", "", "");
 
             Shipments = await TraceDataService.GetLogisticData(shipmentId: "ALL") ?? new List<Shipment>();
-            ShipmentIdList = new();
+            ShipmentIdList = new List<string>();
+            List<string> temp=new();
             foreach (Shipment s in Shipments.Where(s => s.ShipmentId != null).ToList())
             {
-                if (!ShipmentIdList.Contains(s.ShipmentId))
+                if (!temp.Contains(s.ShipmentId))
                 {
-                    ShipmentIdList.Add(s.ShipmentId);
+                    temp.Add(s.ShipmentId);
                 }
             }
-
+            ShipmentIdList = temp.AsEnumerable();
 
             ForceDoNotPrint = false;
             ComboBox1ReadOnly = false;
@@ -579,6 +581,7 @@ public partial class Shipping : ComponentBase
         await UpdateUI();
         CustomerOrderData = list.AsEnumerable();
         await UpdateUI();
+        ReadOnlyElement="shipmentCbx";
         FocusElement = "ComboBox3";
         await UpdateUI();
     }
@@ -1147,7 +1150,7 @@ public partial class Shipping : ComponentBase
             {
                 UpdateInfoField("green", "SUCCESS", "Carton is full");
             }
-            
+
             //Scan with PO
             if (!withoutPOmode)
             {
@@ -1327,7 +1330,7 @@ public partial class Shipping : ComponentBase
             UpdateInfoField("green", "SUCCESS", "The carton now is in queue for making pallet");
             #endregion
 
-          
+
 
             #region Build Pallet when it is full
             //Check pallet is full

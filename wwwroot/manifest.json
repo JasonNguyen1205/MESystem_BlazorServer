@@ -1,6 +1,6 @@
 {
-    "name": "FSystem",
-    "short_name": "FSystem",
+    "name": "MESystem",
+    "short_name": "MESystem",
     "start_url": "./",
     "display": "standalone",
     "background_color": "#ffffff",

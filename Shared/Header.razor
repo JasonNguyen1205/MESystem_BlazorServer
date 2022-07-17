@@ -3,130 +3,33 @@
 @inject SessionValues SessionValues
 @inject IApiClientService _apiClientService
 
-<div class="dxHeader">
-    <DxMenu Title="FRIWO.mes"
-            CollapseItemsToHamburgerMenu="true"
-            CollapseItemToIconMode="MenuCollapseItemToIconMode.Sequentially"
-            DropDownActionMode="MenuDropDownActionMode.Click"
-            DisplayMode="MenuDisplayMode.Auto">
-        <Items>
-            <DxMenuItem Text="HOME" NavigateUrl="/" IconCssClass="menu-icon-home menu-icon" AdaptivePriority="1" >
-                <Items>
-                    <DxMenuItem Text="News">
-                        <Items>
-                            <DxMenuItem Text="Explore our newest features" />
-                            <DxMenuItem Text="Website news" />
-                        </Items>
-                    </DxMenuItem>
-                    <DxMenuItem Text="Our Mission" />
-                </Items>
-            </DxMenuItem>
-            <DxMenuItem Text="PLANNING" IconCssClass="menu-icon-planning menu-icon" AdaptivePriority="1">
-                <Items>
-                    @if (SessionValues.Country.ToUpper().Equals("GERMANY"))
-                    {
-                        <DxMenuItem Text="Magazin" NavigateUrl="ProductionPlanJigsTools/30510/00021,00022,00023,00041,00042,00043,00044,00045,00100,00110,00046,00060,00080,00111,00112,02102" Click="OnItemClick"/>
-                        <DxMenuItem Text="Bauteil-Vorbereitung" NavigateUrl="productionPlanIFS/30670/02102,02501,02503,03105" Click="OnItemClick"/>
-                        <DxMenuItem Text="Loetwelle" NavigateUrl="productionPlanIFS/30650/03101,03102,03111,03107" Click="OnItemClick"/>
-                        <DxMenuItem Text="TestSysteme" NavigateUrl="productionPlanIFS/30650/03301,00090,41003" Click="OnItemClick"/>
-                        <DxMenuItem Text="Vorbereitung" NavigateUrl="productionPlanIFS/30670/02102,02505,02503" Click="OnItemClick"/>
-                        <DxMenuItem Text="Endmontage Komplex" NavigateUrl="productionPlanIFS/30510/00021,00022,00023,00041,00042,00043,00044,00045,00046,00050,00060,00080,00100,00110,00111,00112,00150,03508" Click="OnItemClick"/>
-                        <DxMenuItem Text="Batterie" NavigateUrl="productionPlanIFS/70210/70210" Click="OnItemClick"/>
-
-                    }
-                    else if (SessionValues.Country.ToUpper().Equals("VIETNAM"))
-                    {
-                        <DxMenuItem Text="SMT" NavigateUrl="productionPlanSMT" Click="OnItemClick"/>
-                        <DxMenuItem Text="Jigs+Tools" NavigateUrl="ProductionPlanJigsTools/V3150" Click="OnItemClick"/>
-                        <DxMenuItem Text="Manual Insert" NavigateUrl="productionPlan/V3150/90002,90108" Click="OnItemClick"/>
-                        <DxMenuItem Text="ATS" NavigateUrl="productionPlan/V3640/90012" Click="OnItemClick"/>
-                        <DxMenuItem Text="Laser Trimming" NavigateUrl="productionPlan/V3250/90003" Click="OnItemClick"/>
-                        <DxMenuItem Text="Varnish" NavigateUrl="productionPlan/V3300/90004" Click="OnItemClick"/>
-                        <DxMenuItem Text="Potting" NavigateUrl="productionPlan/V3520/90005" Click="OnItemClick"/>
-                        <DxMenuItem Text="Box Build" NavigateUrl="productionPlan/V3500/90006,90022" Click="OnItemClick"/>
-                        @*<DxMenuItem Text="Box Build" NavigateUrl="productionPlan/V3500/90006,90008" Click="OnItemClick"/>*@
-                        <DxMenuItem Text="Small Order Prod" NavigateUrl="productionPlan/E3500/90250" Click="OnItemClick"/>
-                        <DxMenuItem Text="Transformer" NavigateUrl="productionPlan/T3500/90106" Click="OnItemClick"/>
-                        <DxMenuItem Text="Shop Order State" NavigateUrl="shopOrderStatus/V3500" Click="OnItemClick"/>
-                    }
-                </Items>
-            </DxMenuItem>
-            <DxMenuItem Text="PROCESS" IconCssClass="menu-icon-process menu-icon" AdaptivePriority="1" >
-                <Items>
-                    <DxMenuItem Text="Warehouse Book Orders" NavigateUrl="magazinShopOrder" Click="OnItemClick"/>
-                    <DxMenuItem Text="Warehouse Store Items" NavigateUrl="magazinStoreItems" Click="OnItemClick"/>
-                    <DxMenuItem Text="Production Layouts" NavigateUrl="productionLayout" Click="OnItemClick"/>
-                    <DxMenuItem Text="Departments & Stations" NavigateUrl="departmentStations" Click="OnItemClick"/>
-                    <DxMenuItem Text="Tools & Jigs" NavigateUrl="toolsJigs" Click="OnItemClick"/>
-                    <DxMenuItem Text="Tools & Jigs linker" NavigateUrl="toolsJigsLinker" Click="OnItemClick"/>
-                </Items>
-            </DxMenuItem>
-            <DxMenuItem Text="WAREHOUSE" IconCssClass="menu-icon-products menu-icon" AdaptivePriority="1" >
-                <Items>
-                    <DxMenuItem Text="Pallet Build" NavigateUrl="warehouse/shipping" Click="OnItemClick"/>
-                    <DxMenuItem Text="Shipout Pallet" NavigateUrl="shipoutpallet" Click="OnItemClick"/>
-                    <DxMenuItem Text="Merge unfull Cartons" NavigateUrl="mergepartialbox" Click="OnItemClick"/>
-                    <DxMenuItem Text="Confirm Customer Version for Shop Order" NavigateUrl="setrevbyso" Click="OnItemClick"/>
-                    <DxMenuItem Text="Check Stock By Family" NavigateUrl="checkstock" Click="OnItemClick"/>
-                    <DxMenuItem Text="Shipment Overview" NavigateUrl="shipmentoverview" Click="OnItemClick"/>
-                </Items>
-            </DxMenuItem> 
-              <DxMenuItem Text="HR" IconCssClass="oi oi-people" AdaptivePriority="1" >
-                <Items>
-                    <DxMenuItem Text="Check In-Out" NavigateUrl="hr/updatecheckinout" Click="OnItemClick" />
-                </Items>
-            </DxMenuItem>
-            <DxMenuItem Text="REPORT" IconCssClass="oi oi-pie-chart" AdaptivePriority="1" >
-                <Items>
-                    <DxMenuItem Text="Report Viewer" NavigateUrl="report/reportviewer" Click="OnItemClick" />
-                    <DxMenuItem Text="Report Designer" NavigateUrl="report/reportdesigner" Click="OnItemClick" />
-                    <DxMenuItem Text="Serialize Phoenix" NavigateUrl="report/phoenixserials" Click="OnItemClick" />
-                
-                </Items>
-            </DxMenuItem>
-            <DxMenuItem Text="SUPPORT" IconCssClass="menu-icon-support menu-icon" AdaptivePriority="1" >
-                <Items>
-                    <DxMenuItem Text="Getting Started" Click="OnItemClick"/>
-                    <DxMenuItem Text="Documentation" Click="OnItemClick"/>
-                    <DxMenuItem Text="Support Center" Click="OnItemClick"/>
-                    <DxMenuItem Text="Barcode Reader" NavigateUrl="BarcodeReader" Click="OnItemClick" />
-                    <DxMenuItem Text="Test Printer" NavigateUrl="support/printertest" Click="OnItemClick" />
-                    <DxMenuItem Text="Blogs" Click="OnItemClick"/>
-                </Items>
-            </DxMenuItem>
-            <DxMenuItem Position="ItemPosition.End" Text="@SessionValues.Country" IconCssClass="menu-icon-country menu-icon" IconUrl=@SessionValues.CountryIcon Click="@(() => PopupVisible = true)" />
-        </Items>
-    </DxMenu>
-
-    <DxPopup @bind-Visible="@PopupVisible"
-             HeaderText="Choose Server Side"
-             Width="300px">
-        <BodyTemplate Context="PopupContext">
-            <div style="padding-top: 0.8rem; padding-bottom: 0.8rem">
-                <DxFormLayout>
-                    <DxFormLayoutItem>
-                        <Template>
-                            <DxButton Text="Germany" SizeMode="SizeMode.Medium" RenderStyle="ButtonRenderStyle.Primary" Click="@(() => SetCountryValues("GERMANY"))" />
-                        </Template>
-                    </DxFormLayoutItem>
-                    <DxFormLayoutItem>
-                        <Template>
-                            <DxButton Text="Vietnam" SizeMode="SizeMode.Medium" RenderStyle="ButtonRenderStyle.Danger" style="color: yellow;" Click="@(() => SetCountryValues("VIETNAM"))" />
-                        </Template>
-                    </DxFormLayoutItem>
-                </DxFormLayout>
+<!-- Topbar Start -->
+<div class="container-fluid bg-dark text-light p-0 d-none d-md-block d-lg-block">
+    <div class="row gx-0 p-0">
+        <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
+            <div class="d-inline-flex align-items-center" style="height: 45px;">
+                <small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>Lot 240, Street 12, Amata Industrial Zone, Bien Hoa, Dong Nai</small>
+                <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>+084 2513 891 170</small>
+                <small class="text-light"><i class="fa fa-envelope-open me-2"></i>jason.nguyen@friwo.com</small>
             </div>
-        </BodyTemplate>
-    </DxPopup>
+        </div>
+        <div class="col-lg-4 justify-content-center mb-0 mb-lg-0 animated slideInRight">
+            <div class="col-12 m-0 d-inline-flex flex-row align-content-center justify-content-around" style="height: 45px;">
+               
+                        <a class="btn btn-sm btn-outline-primary btn-sm-square rounded-circle me-2" href="profile"><i class="fas fa-solid fa-user"></i></a>
+                        <div class="text-primary" aria-label="true"/>
+                        <a class="btn btn-sm btn-outline-danger btn-sm-square rounded-circle me-2" href="#loginModal"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                        <a class="btn btn-sm btn-outline-primary btn-sm-square rounded-circle me-2" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></a>
+                        <a class="btn btn-outline-primary btn-sm-square rounded-circle me-2"><i class="fa-solid fa-headset"></i></a>
+                  
+                        <a class="btn btn-sm btn-outline-primary btn-sm-square rounded-circle me-2" href="createaccount"><i class="fas fa-solid fa-user-plus"></i></a>
+                        <a class="btn btn-sm btn-outline-primary btn-sm-square rounded-circle me-2" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="fas fa-sign-in-alt"></i></a>
+                  
+            </div>
+        </div>
+    </div>
 </div>
 <div class="colorStripe"></div>
-@*<nav class="navbar header-navbar p-0">
-        <button class="navbar-toggler bg-primary d-block" @onclick="OnToggleClick">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="ms-3 fw-bold title pe-4">MESystem</div>
-    </nav>*@
-
 @code {
     [CascadingParameter] private string ClientIpAdress { get; set; }
     [Parameter] public bool ToggleOn { get; set; }
@@ -210,6 +113,6 @@
     void OnItemClick(MenuItemClickEventArgs e)
     {
         string test = HeaderName;
-        //SessionValues.PageName = "- "+e.ItemInfo.Name+"\\"+e.ItemInfo.Text;
+        SessionValues.PageName = "- "+e.ItemInfo.Name+"\\"+e.ItemInfo.Text;
     }
 }

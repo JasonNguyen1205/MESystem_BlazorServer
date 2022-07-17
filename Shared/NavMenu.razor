@@ -1,52 +1,225 @@
-﻿<div class="sidebar @StateCssClass">
-<DxTreeView AllowSelectNodes="true" CssClass="app-sidebar">
+﻿@*<div class="sidebar @StateCssClass">
+    <DxTreeView AllowSelectNodes="true" CssClass="app-sidebar">
     <Nodes>
-        <DxTreeViewNode NavigateUrl="./" Text="Overview"></DxTreeViewNode>
-        <DxTreeViewNode NavigateUrl="datagrid" Text="Data Grid"></DxTreeViewNode>
+    <DxTreeViewNode NavigateUrl="./" Text="Overview"></DxTreeViewNode>
+    <DxTreeViewNode NavigateUrl="datagrid" Text="Data Grid"></DxTreeViewNode>
     </Nodes>
-</DxTreeView>
-</div>
+    </DxTreeView>
+    </div>
 
-@code {
+    @code {
     [Parameter] public string StateCssClass { get; set; }
-}
+    }
+*@
 
-@*<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">MESystem</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+@inject NavigationManager _navigation
+
+
+<!-- Topbar Start -->
+<div class="container-fluid bg-dark text-light m-0 p-0 d-none d-lg-block">
+    <div class="row gx-0 p-0">
+        <div class="col-lg-8 text-center text-lg-start mb-lg-0">
+            <div class="d-inline-flex align-items-center" style="height: 45px;">
+                <small class="me-3 text-light">
+                    <i class="fa fa-map-marker-alt me-2"></i>Lot 240, Street 12, Amata
+                    Industrial Zone, Bien Hoa, Dong Nai
+                </small>
+                <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>+084 2513 891 170</small>
+            </div>
+        </div>
+        <div class="col-lg-4 justify-content-center mb-0 mb-lg-0 animated slideInRight">
+            <small class="col-12 m-0 container-fluid d-inline-flex justify-content-end" style="height: 45px;">
+
+                <a class="btn btn-sm btn-outline-primary btn-sm-square rounded-circle me-2" href="profile">
+                    <i class="fas fa-solid fa-user"></i>
+                </a>
+                <small class="text-primary" aria-label="true"></small>
+                <a class="btn btn-sm btn-outline-danger btn-sm-square rounded-circle me-2" href="#loginModal">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                </a>
+                <a class="btn btn-sm btn-outline-primary btn-sm-square rounded-circle me-2" data-bs-toggle="modal"
+                   data-bs-target="#searchModal">
+                    <i class="fa fa-search"></i>
+                </a>
+                <a class="btn btn-outline-primary btn-sm-square rounded-circle me-2">
+                    <i class="fa-solid fa-headset"></i>
+                </a>
+
+                <a class="btn btn-sm btn-outline-primary btn-sm-square rounded-circle me-2" href="createaccount">
+                    <i class="fas fa-solid fa-user-plus"></i>
+                </a>
+                <a class="btn btn-sm btn-outline-primary btn-sm-square rounded-circle me-2" data-bs-toggle="modal"
+                   data-bs-target="#loginModal"><i class="fas fa-sign-in-alt"></i></a>
+
+            </small>
+        </div>
     </div>
 </div>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
+
+<div class="container-fluid p-0 px-5 position-relative m-0">
+    <nav class="navbar nav-inverse navbar-expand-lg navbar-dark text-light py-0 py-lg-0 m-0">
+        <div class="container-fluid">
+            <div class="navbar-brand p-0">
+                <h1>&nbsp;<i class="fa-solid fa-charging-station"></i>&nbsp;FRIWO</h1>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse nav-justified" id="navbarCollapse">
+                <div class="navbar-nav m-0 px-lg-5">
+                                 <a class="nav-item nav-link" data-bs-toggle="offcanvas" href="#offcanvasDashboard" aria-controls="offcanvasDashboard">
+                                DASHBOARD <span class="caret"></span>
+                                </a>
+                        <a class="nav-item nav-link" data-bs-toggle="offcanvas" href="#offcanvasmes" aria-controls="offcanvasMes">
+                                MES <span class="caret"></span>
+                                </a>
+                                <a class="nav-item nav-link" data-bs-toggle="offcanvas" href="#offcanvastrace" aria-controls="offcanvasTrace">
+                                TRACEABILITY <span class="caret"></span>
+                                </a>
+                              
+                           <a class="nav-item nav-link" data-bs-toggle="offcanvas" href="#offcanvasreport" aria-controls="offcanvasReport">
+                                REPORT <span class="caret"></span>
+                                </a>   
+                                  <a class="nav-item nav-link" data-bs-toggle="offcanvas" href="#offcanvasdocument" aria-controls="offcanvasDocument">
+                                DOCUMENT <span class="caret"></span>
+                                </a>  
+                    <div class="container-fluid m-0 mt-2 d-inline-flex d-lg-none justify-content-start align-items-center"
+                         style="height: 45px;">
+
+                        <a class="btn btn-sm btn-outline-primary btn-sm-square rounded-circle me-2 animated slideInLeft"
+                           href="profile"><i class="fas fa-solid fa-user"></i></a>
+                        <span class="d-inline-flex text-primary me-2 animated slideInLeft"></span>
+                        &nbsp;&nbsp;
+                        <a class="btn btn-sm btn-outline-danger btn-sm-square rounded-circle me-2 animated slideInLeft"
+                           href=""><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                        <a class="btn btn-sm btn-outline-primary btn-sm-square rounded-circle me-2 animated slideInLeft"
+                            data-bs-toggle="modal"
+                           data-bs-target="#searchModal"><i class="fa fa-search"></i></a>
+                        <a class="btn btn-outline-primary btn-sm-square rounded-circle m-2 animated slideInLeft">
+                            <i class="fa-solid fa-headset"></i>
+                        </a>
+
+                        <a class="btn btn-sm btn-outline-primary btn-sm-square rounded-circle me-0"
+                           href="createaccount"><i class="fas fa-solid fa-user-plus"></i></a>
+                        &nbsp;&nbsp;
+                        <a class="btn btn-sm btn-outline-primary btn-sm-square rounded-circle me-0"
+                           data-bs-toggle="modal" data-bs-target="#loginModal"><i class="fas fa-sign-in-alt"></i></a>
+                    </div>
+                </div>
+            </div>
         </div>
     </nav>
-</div>*@
+</div>
 
-@*@code {
+
+<div>
+    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvastrace" aria-labelledby="offcanvasTraceLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasTraceLabel">TRACEABILITY</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+           <div>
+              <b>Traceability System Characteristics</b>
+              Traceability is the ability to access any or all information about a product throughout its life cycle by using a system of recorded identifications. Traceability also relates to the ability to track and trace along the supply chain.  </div>
+            </div>
+            <div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                    Data Collection
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+ 
+<div>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasmes" aria-labelledby="offcanvasMes">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasMes">MES</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+                    <div>
+                <b>Manufacturing execution systems (MES)</b> are computerized systems used in manufacturing to track and document the transformation of raw materials to finished goods. MES provides information that helps manufacturing decision makers understand how current conditions on the plant floor can be optimized to improve production output.[1] MES works as real time monitoring system to enable the control of multiple elements of the production process (e.g. inputs, personnel, machines and support services). 
+                    </div>
+                 <div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownShipping" data-bs-toggle="dropdown">
+                    SHIPPING
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownShipping">
+                    <li><a class="dropdown-item" href="#">Check Stock</a></li>
+                    <li><a class="dropdown-item" href="#">Pallet Build</a></li>
+                    <li><a class="dropdown-item" href="#">Overview</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+     
+<div>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasreport" aria-labelledby="offcanvasReport">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasReport">REPORT</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div>
+              <b>Traceability System Characteristics: </b>
+              Traceability is the ability to access any or all information about a product throughout its life cycle by using a system of recorded identifications. Traceability also relates to the ability to track and trace along the supply chain.  </div>
+            </div>
+            <div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                    Dropdown button
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </div>
+        
+    </div>
+</div>
+
+<div>
+    <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasdocument" aria-labelledby="offcanvasDocument">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasDocument">Document</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div>
+                Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+            </div>
+            <div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                    Dropdown button
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()
     {
-        collapseNavMenu = !collapseNavMenu;
+        collapseNavMenu=!collapseNavMenu;
     }
-}*@
+
+}

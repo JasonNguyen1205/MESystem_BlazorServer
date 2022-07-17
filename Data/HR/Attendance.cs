@@ -9,7 +9,7 @@ public class Attendance
     [Column(nameof(UserID), TypeName = "bigint")]
     public long UserID { get; set; }
     [Column(nameof(TimeStr), TypeName = "Date")]
-    public DateTime? TimeStr { get; set; } 
+    public DateTime? TimeStr { get; set; }
     [Column(nameof(TimeDate), TypeName = "Date")]
     public DateTime? TimeDate { get; set; }
     [Column(nameof(TimeIn), TypeName = "Date")]
@@ -22,11 +22,10 @@ public class Attendance
     public bool Checked => (FingerTime>1&&TimeOffset()>new TimeSpan(0,7,0,0));
     [NotMapped]
     public TimeSpan? Offset => TimeOffset();
-  
+
     public TimeSpan? TimeOffset()
     {
         var rs = TimeOut-TimeIn;
-        long temp = 0;
         if(TimeOut!=null&&rs!=null)
             return rs;
         else
